@@ -1,13 +1,29 @@
 import Head from "next/head";
+import { Component } from "react";
+import { attributes, react as HomeContent } from "../content/home.md";
 
-export default function Home() {
-	return (
-		<div>
-			<Head>
-				<title>Create Next App</title>
-				<link rel="icon" href="/favicon.ico" />
-			</Head>
-			<h1>Hello World!</h1>
-		</div>
-	);
+export default class Home extends Component {
+	render() {
+		let { title, cats } = attributes;
+		return (
+			<>
+				<Head>
+					<title>Create Next App</title>
+					<link rel="icon" href="/favicon.ico" />
+				</Head>
+				<article>
+					<h1>{title}</h1>
+					<HomeContent />
+					<ul>
+						{cats.map((cat, k) => (
+							<li key={k}>
+								<h2>{cat.name}</h2>
+								<p>{cat.description}</p>
+							</li>
+						))}
+					</ul>
+				</article>
+			</>
+		);
+	}
 }
