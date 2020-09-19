@@ -1,6 +1,16 @@
 import Head from "next/head";
+import Link from "next/link";
+import groq from "groq";
+import client from "../client";
+import imageUrlBuilder from "@sanity/image-url";
 
-const index = () => {
+function urlFor(source) {
+	return imageUrlBuilder(client).image(source);
+}
+
+const index = (props) => {
+	const { albums = [] } = props;
+	console.log(albums);
 	return (
 		<>
 			<Head>
@@ -8,8 +18,25 @@ const index = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<h1>Hello world</h1>
+			{albums.map(
+				({ _id, title = "", slug = "", images }) =>
+					slug && (
+						<div key={_id}>
+							<Link href="/[slug]" as={`/${slug.current}`}>
+								<div>
+									<img src={urlFor(images[0]).width(200).url()} alt={title} />
+									<span>{title}</span>
+								</div>
+							</Link>
+						</div>
+					)
+			)}
 		</>
 	);
 };
+
+index.getInitialProps = async () => ({
+	albums: await client.fetch(groq`*[_type == "albums"]|order(_createdAt desc)`),
+});
 
 export default index;
