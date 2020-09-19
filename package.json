@@ -9,6 +9,9 @@
 		"start": "next start"
 	},
 	"dependencies": {
+		"@sanity/client": "^1.150.7",
+		"@sanity/image-url": "^0.140.19",
+		"groq": "^1.150.1",
 		"next": "9.5.3",
 		"next-on-netlify": "^2.4.0",
 		"react": "^16.13.1",
