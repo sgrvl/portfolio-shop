@@ -3,6 +3,7 @@ import Link from "next/link";
 import groq from "groq";
 import client from "../client";
 import imageUrlBuilder from "@sanity/image-url";
+import styles from "./index.module.sass";
 
 function urlFor(source) {
 	return imageUrlBuilder(client).image(source);
@@ -15,19 +16,28 @@ const index = ({ albums }) => {
 				<title>Alexis Albert</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			{albums.map(
-				({ _id, title = "", slug = "", images }) =>
-					slug && (
-						<div key={_id}>
-							<Link href="/[slug]" as={`/${slug.current}`}>
-								<div>
-									<img src={urlFor(images[0]).width(200).url()} alt={title} />
-									<span>{title}</span>
-								</div>
+
+			<div className={styles.grid}>
+				{albums.map(
+					({ _id, title = "", slug = "", images }) =>
+						slug && (
+							<Link href="/[slug]" as={`/${slug.current}`} key={_id}>
+								<a className={styles.item}>
+									<img
+										src={urlFor(images[0])
+											.minHeight(350)
+											.width(425)
+											.fit("crop")
+											.format("webp")
+											.url()}
+										alt={title}
+									/>
+									<div>{title}</div>
+								</a>
 							</Link>
-						</div>
-					)
-			)}
+						)
+				)}
+			</div>
 		</>
 	);
 };
