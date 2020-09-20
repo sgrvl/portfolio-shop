@@ -8,16 +8,13 @@ function urlFor(source) {
 	return imageUrlBuilder(client).image(source);
 }
 
-const index = (props) => {
-	const { albums = [] } = props;
-	console.log(albums);
+const index = ({ albums }) => {
 	return (
 		<>
 			<Head>
-				<title>Create Next App</title>
+				<title>Alexis Albert</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<h1>Hello world</h1>
 			{albums.map(
 				({ _id, title = "", slug = "", images }) =>
 					slug && (
