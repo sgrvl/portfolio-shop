@@ -3,6 +3,7 @@ import Link from "next/link";
 import groq from "groq";
 import client from "../client";
 import imageUrlBuilder from "@sanity/image-url";
+import LazyLoad from "react-lazyload";
 import styles from "./index.module.sass";
 
 function urlFor(source) {
@@ -21,20 +22,22 @@ const index = ({ albums }) => {
 				{albums.map(
 					({ _id, title = "", slug = "", images }) =>
 						slug && (
-							<Link href="/[slug]" as={`/${slug.current}`} key={_id}>
-								<a className={styles.item}>
-									<img
-										src={urlFor(images[0])
-											.minHeight(350)
-											.width(425)
-											.fit("crop")
-											.format("webp")
-											.url()}
-										alt={title}
-									/>
-									<div>{title}</div>
-								</a>
-							</Link>
+							<LazyLoad>
+								<Link href="/[slug]" as={`/${slug.current}`} key={_id}>
+									<a className={styles.item}>
+										<img
+											src={urlFor(images[0])
+												.minHeight(350)
+												.width(425)
+												.fit("crop")
+												.format("webp")
+												.url()}
+											alt={title}
+										/>
+										<div>{title}</div>
+									</a>
+								</Link>
+							</LazyLoad>
 						)
 				)}
 			</div>

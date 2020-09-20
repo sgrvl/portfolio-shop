@@ -2,6 +2,8 @@ import Head from "next/head";
 import client from "../client";
 import groq from "groq";
 import imageUrlBuilder from "@sanity/image-url";
+import LazyLoad from "react-lazyload";
+import styles from "./[slug].module.sass";
 
 function urlFor(source) {
 	return imageUrlBuilder(client).image(source);
@@ -15,13 +17,22 @@ const Album = ({ title = "Missing title", images }) => {
 			</Head>
 			<div>
 				<h1>{title}</h1>
-				{images && (
-					<div>
-						{images.map((i, index) => (
-							<img src={urlFor(i).width(500).url()} key={`image ${index}`} />
-						))}
-					</div>
-				)}
+				<ul className={styles.ul}>
+					{images && (
+						<>
+							{images.map((i, index) => (
+								<LazyLoad>
+									<li>
+										<img
+											src={urlFor(i).format("webp").url()}
+											key={`image ${index}`}
+										/>
+									</li>
+								</LazyLoad>
+							))}
+						</>
+					)}
+				</ul>
 			</div>
 		</>
 	);
