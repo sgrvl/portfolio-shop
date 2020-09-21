@@ -5,7 +5,7 @@ import client from "../client";
 import imageUrlBuilder from "@sanity/image-url";
 import LazyLoad from "react-lazyload";
 import styles from "./index.module.sass";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 function urlFor(source) {
 	return imageUrlBuilder(client).image(source);

@@ -6,7 +6,7 @@ import LazyLoad from "react-lazyload";
 import styles from "./[slug].module.sass";
 import { useState } from "react";
 import Modal from "../components/Modal";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 function urlFor(source) {
 	return imageUrlBuilder(client).image(source);
@@ -22,7 +22,10 @@ const Album = ({ title = "Missing title", images }) => {
 			</Head>
 			<div>
 				<h1>{title}</h1>
-				{isClicked && <Modal image={isClicked} setIsClicked={setIsClicked} />}
+				<AnimatePresence>
+					{isClicked && <Modal image={isClicked} setIsClicked={setIsClicked} />}
+				</AnimatePresence>
+
 				<ul className={styles.ul}>
 					{images && (
 						<>

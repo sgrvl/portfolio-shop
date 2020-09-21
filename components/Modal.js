@@ -1,9 +1,15 @@
 import React from "react";
 import styles from "./Modal.module.sass";
+import { motion } from "framer-motion";
 
 const Modal = ({ image, setIsClicked }) => {
 	return (
-		<div className={styles.modal}>
+		<motion.div
+			className={styles.modal}
+			animate={{ opacity: 1 }}
+			initial={{ opacity: 0 }}
+			exit={{ opacity: 0 }}
+		>
 			<img
 				src="/close.svg"
 				alt="Close icon"
@@ -11,7 +17,7 @@ const Modal = ({ image, setIsClicked }) => {
 				onClick={() => setIsClicked(null)}
 			/>
 			<img src={image.src} className={styles.main} />
-		</div>
+		</motion.div>
 	);
 };
 
