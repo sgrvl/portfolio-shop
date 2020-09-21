@@ -5,13 +5,15 @@ import imageUrlBuilder from "@sanity/image-url";
 import LazyLoad from "react-lazyload";
 import styles from "./[slug].module.sass";
 import { useState } from "react";
+import Modal from "../components/Modal";
+import { motion } from "framer-motion";
 
 function urlFor(source) {
 	return imageUrlBuilder(client).image(source);
 }
 
 const Album = ({ title = "Missing title", images }) => {
-	const [isLoaded, setIsLoaded] = useState(false);
+	const [isClicked, setIsClicked] = useState(null);
 
 	return (
 		<>
@@ -20,14 +22,21 @@ const Album = ({ title = "Missing title", images }) => {
 			</Head>
 			<div>
 				<h1>{title}</h1>
+				{isClicked && <Modal image={isClicked} setIsClicked={setIsClicked} />}
 				<ul className={styles.ul}>
 					{images && (
 						<>
 							{images.map((i, index) => (
 								<LazyLoad key={`image ${index}`}>
-									<li
-										className={isLoaded ? styles.loaded : styles.not_loaded}
-										onLoad={() => setIsLoaded(true)}
+									<motion.li
+										animate={{ opacity: 1 }}
+										initial={{ opacity: 0 }}
+										transition={{ duration: 0.6 }}
+										onClick={(e) =>
+											e.target.id == "photo"
+												? setIsClicked(e.target)
+												: setIsClicked(null)
+										}
 									>
 										<div className={styles.options}>
 											<div className={styles.cart}>
@@ -40,9 +49,8 @@ const Album = ({ title = "Missing title", images }) => {
 												/>
 											</div>
 										</div>
-
-										<img src={urlFor(i).format("webp").url()} />
-									</li>
+										<img src={urlFor(i).format("webp").url()} id="photo" />
+									</motion.li>
 								</LazyLoad>
 							))}
 						</>

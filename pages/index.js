@@ -5,14 +5,13 @@ import client from "../client";
 import imageUrlBuilder from "@sanity/image-url";
 import LazyLoad from "react-lazyload";
 import styles from "./index.module.sass";
-import { useState } from "react";
+import { motion } from "framer-motion";
 
 function urlFor(source) {
 	return imageUrlBuilder(client).image(source);
 }
 
 const index = ({ albums }) => {
-	const [isLoaded, setIsLoaded] = useState(false);
 	return (
 		<>
 			<Head>
@@ -27,9 +26,10 @@ const index = ({ albums }) => {
 							<LazyLoad key={_id}>
 								<Link href="/[slug]" as={`/${slug.current}`}>
 									<a className={styles.item}>
-										<img
-											className={isLoaded ? styles.loaded : styles.not_loaded}
-											onLoad={() => setIsLoaded(true)}
+										<motion.img
+											animate={{ opacity: 1 }}
+											initial={{ opacity: 0 }}
+											transition={{ duration: 0.6 }}
 											src={urlFor(images[0])
 												.minHeight(350)
 												.width(425)
