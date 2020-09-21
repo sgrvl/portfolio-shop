@@ -7,6 +7,7 @@ import styles from "./[slug].module.sass";
 import { useState } from "react";
 import Modal from "../components/Modal";
 import { AnimatePresence, motion } from "framer-motion";
+import { getScrollbarWidth } from "../components/utils";
 
 function urlFor(source) {
 	return imageUrlBuilder(client).image(source);
@@ -23,7 +24,17 @@ const Album = ({ title = "Missing title", images }) => {
 			<div>
 				<h1>{title}</h1>
 				<AnimatePresence>
-					{isClicked && <Modal image={isClicked} setIsClicked={setIsClicked} />}
+					{isClicked && (
+						<>
+							<Modal image={isClicked} setIsClicked={setIsClicked} />
+							<style jsx global>{`
+								body {
+									overflow-y: hidden;
+									padding-right: ${getScrollbarWidth()}px;
+								}
+							`}</style>
+						</>
+					)}
 				</AnimatePresence>
 
 				<ul className={styles.ul}>

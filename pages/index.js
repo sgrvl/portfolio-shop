@@ -5,7 +5,7 @@ import client from "../client";
 import imageUrlBuilder from "@sanity/image-url";
 import LazyLoad from "react-lazyload";
 import styles from "./index.module.sass";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 function urlFor(source) {
 	return imageUrlBuilder(client).image(source);
@@ -29,7 +29,7 @@ const index = ({ albums }) => {
 										<motion.img
 											animate={{ opacity: 1 }}
 											initial={{ opacity: 0 }}
-											transition={{ duration: 0.6 }}
+											transition={{ duration: 0.3 }}
 											src={urlFor(images[0])
 												.minHeight(350)
 												.width(425)
