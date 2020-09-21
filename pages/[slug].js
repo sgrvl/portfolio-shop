@@ -46,23 +46,8 @@ const Album = ({ title = "Missing title", images }) => {
 										animate={{ opacity: 1 }}
 										initial={{ opacity: 0 }}
 										transition={{ duration: 0.6 }}
-										onClick={(e) =>
-											e.target.id == "photo"
-												? setIsClicked(e.target)
-												: setIsClicked(null)
-										}
+										onClick={(e) => setIsClicked(e.target)}
 									>
-										<div className={styles.options}>
-											<div className={styles.cart}>
-												<img src="/share-icon.svg" alt="Share this image" />
-											</div>
-											<div className={styles.cart}>
-												<img
-													src="/shopping-plus.svg"
-													alt="Add to shopping cart"
-												/>
-											</div>
-										</div>
 										<img src={urlFor(i).format("webp").url()} id="photo" />
 									</motion.li>
 								</LazyLoad>

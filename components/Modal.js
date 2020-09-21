@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import styles from "./Modal.module.sass";
 import { AnimatePresence, motion } from "framer-motion";
+import Share from "./Share";
 
-const Modal = ({ image, setIsClicked }) => {
+const Modal = ({ image, setIsClicked, shareUrl }) => {
 	const [isShopOpen, setIsShopOpen] = useState(false);
-	const [isShareOpen, setIsShareOpen] = useState(false);
 	return (
 		<motion.div
 			className={styles.modal}
@@ -23,11 +23,6 @@ const Modal = ({ image, setIsClicked }) => {
 					alt="Add to shopping cart"
 					onClick={() => setIsShopOpen(true)}
 				/>
-				<img
-					src="/share-icon.svg"
-					alt="Share this image"
-					onClick={() => setIsShareOpen(true)}
-				/>
 			</div>
 			<AnimatePresence>
 				{isShopOpen && (
@@ -42,21 +37,6 @@ const Modal = ({ image, setIsClicked }) => {
 							alt="Close"
 							className={styles.pop_arrow}
 							onClick={() => setIsShopOpen(false)}
-						/>
-					</motion.div>
-				)}
-				{isShareOpen && (
-					<motion.div
-						className={styles.pop}
-						animate={{ x: 0 }}
-						initial={{ x: 400 }}
-						exit={{ x: 400 }}
-					>
-						<img
-							src="/arrow-close.svg"
-							alt="Close"
-							className={styles.pop_arrow}
-							onClick={() => setIsShareOpen(false)}
 						/>
 					</motion.div>
 				)}
