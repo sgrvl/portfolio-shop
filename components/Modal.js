@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import styles from "./Modal.module.sass";
 import { AnimatePresence, motion } from "framer-motion";
-import Share from "./Share";
 
-const Modal = ({ image, setIsClicked, shareUrl }) => {
+const Modal = ({ image, setIsClicked }) => {
 	const [isShopOpen, setIsShopOpen] = useState(false);
 	return (
 		<motion.div
