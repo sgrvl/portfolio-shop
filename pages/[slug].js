@@ -4,12 +4,15 @@ import groq from "groq";
 import imageUrlBuilder from "@sanity/image-url";
 import LazyLoad from "react-lazyload";
 import styles from "./[slug].module.sass";
+import { useState } from "react";
 
 function urlFor(source) {
 	return imageUrlBuilder(client).image(source);
 }
 
 const Album = ({ title = "Missing title", images }) => {
+	const [isLoaded, setIsLoaded] = useState(false);
+
 	return (
 		<>
 			<Head>
@@ -21,12 +24,24 @@ const Album = ({ title = "Missing title", images }) => {
 					{images && (
 						<>
 							{images.map((i, index) => (
-								<LazyLoad>
-									<li>
-										<img
-											src={urlFor(i).format("webp").url()}
-											key={`image ${index}`}
-										/>
+								<LazyLoad key={`image ${index}`}>
+									<li
+										className={isLoaded ? styles.loaded : styles.not_loaded}
+										onLoad={() => setIsLoaded(true)}
+									>
+										<div className={styles.options}>
+											<div className={styles.cart}>
+												<img src="/share-icon.svg" alt="Share this image" />
+											</div>
+											<div className={styles.cart}>
+												<img
+													src="/shopping-plus.svg"
+													alt="Add to shopping cart"
+												/>
+											</div>
+										</div>
+
+										<img src={urlFor(i).format("webp").url()} />
 									</li>
 								</LazyLoad>
 							))}
