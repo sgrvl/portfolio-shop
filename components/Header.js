@@ -6,6 +6,11 @@ import { AnimatePresence, motion } from "framer-motion";
 
 const Header = () => {
 	const [isOpen, setIsOpen] = useState(false);
+	const Large = window.localStorage.getItem(0);
+	const Medium = window.localStorage.getItem(2);
+	const Small = window.localStorage.getItem(1);
+
+	console.log(Large, Medium, Small);
 
 	return (
 		<>

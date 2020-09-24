@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useEffect } from "react";
 import Link from "next/link";
 import groq from "groq";
 import client from "../client";
@@ -11,7 +12,13 @@ function urlFor(source) {
 	return imageUrlBuilder(client).image(source);
 }
 
-const index = ({ albums }) => {
+const index = ({ albums, prices }) => {
+	useEffect(() => {
+		prices.map((i, index) => {
+			window.localStorage.setItem(index, JSON.stringify(i));
+		});
+	}, [prices]);
+
 	return (
 		<>
 			<Head>
@@ -51,6 +58,7 @@ const index = ({ albums }) => {
 
 index.getInitialProps = async () => ({
 	albums: await client.fetch(groq`*[_type == "albums"]|order(_createdAt desc)`),
+	prices: await client.fetch(groq`*[_type == "prices"]`),
 });
 
 export default index;
