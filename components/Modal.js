@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Modal.module.sass";
 import { AnimatePresence, motion } from "framer-motion";
+import AddCart from "./AddCart";
 
 const Modal = ({ image, setIsClicked }) => {
 	const [isShopOpen, setIsShopOpen] = useState(false);
@@ -37,6 +38,7 @@ const Modal = ({ image, setIsClicked }) => {
 							className={styles.pop_arrow}
 							onClick={() => setIsShopOpen(false)}
 						/>
+						<AddCart />
 					</motion.div>
 				)}
 			</AnimatePresence>
